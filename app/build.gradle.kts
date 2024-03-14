@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.googleDevtoolsKsp)
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
 }
 
 android {
@@ -45,12 +47,23 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlinx.serialization.json)
+    implementation (libs.androidx.lifecycle.extensions)
+    implementation (libs.glide)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.runtime.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.material)
+    implementation (libs.circleimageview)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    annotationProcessor (libs.compiler)
+    implementation (libs.annotations)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
