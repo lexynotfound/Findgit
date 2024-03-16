@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleDevtoolsKsp)
+    id("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
 }
 
@@ -19,7 +20,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
-        buildConfigField("String", "API_TOKEN", "\"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\"")
+        buildConfigField("String", "API_TOKEN", "\"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\"")
     }
 
     buildTypes {
@@ -57,8 +58,11 @@ dependencies {
     implementation (libs.circleimageview)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     annotationProcessor (libs.compiler)
     implementation (libs.annotations)
+    implementation (libs.shimmer)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation(libs.androidx.activity)

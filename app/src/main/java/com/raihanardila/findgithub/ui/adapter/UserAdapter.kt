@@ -11,7 +11,6 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.UsersModel
 import de.hdodenhof.circleimageview.CircleImageView
-import java.text.FieldPosition
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
@@ -19,22 +18,20 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     private var onUserClickListener: OnUserClickListener? = null
 
     fun setOnUserClickListener(listener: OnUserClickListener) {
-        onUserClickListener = listener
+        this.onUserClickListener = listener
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setUsers(users: List<UsersModel>){
+    fun setUsers(users: List<UsersModel>) {
         userList.clear()
         userList.addAll(users)
         notifyDataSetChanged()
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.UserViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_users, parent, false)
-        return  UserViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_users, parent, false)
+        return UserViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -54,6 +51,14 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun getItemCount(): Int {
         return userList.size
+    }
+
+    fun getItem(position: Int): UsersModel? {
+        return if (position in 0 until userList.size) {
+            userList[position]
+        } else {
+            null
+        }
     }
 
     class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

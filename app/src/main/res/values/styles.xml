@@ -19,6 +19,14 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <style name="circleImageViewStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="strokeColor">@color/gray</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
+
     <style name="toolbar_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>

@@ -8,6 +8,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.raihanardila.findgithub.databinding.ActivityMainBinding
 import com.raihanardila.findgithub.ui.base.HomeBaseFragment
+import com.raihanardila.findgithub.ui.favorite.FavoriteFragment
+import com.raihanardila.findgithub.ui.profile.ProfileFragment
 import com.raihanardila.findgithub.ui.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +38,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.search -> {
                     hideActionBar()
                     loadFragment(SearchFragment())
+                    true
+                }
+                R.id.fav -> {
+                    hideActionBar()
+                    loadFragment(FavoriteFragment())
+                    true
+                }
+                R.id.profile -> {
+                    hideActionBar()
+                    loadFragment(ProfileFragment())
                     true
                 }
 

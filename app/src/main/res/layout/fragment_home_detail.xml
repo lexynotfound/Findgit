@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin">
+            <ImageButton
+                android:id="@+id/BackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="1dp"
+                android:scaleType="centerInside"
+                android:contentDescription="@string/iconback"
+                android:src="@drawable/arrow_left" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <!-- Profile Image -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+
+                <!-- ProgressBar -->
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Username -->
+                <TextView
+                    android:id="@+id/usernameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:text="@string/username"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/profileImage" />
+
+                <!-- Name -->
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/usernameTextView" />
+
+                <!-- Bio -->
+                <TextView
+                    android:id="@+id/bioTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nameTextView" />
+
+                <!-- ImageView for displaying images in README -->
+                <LinearLayout
+                    android:id="@+id/imageContainer"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/bioTextView"
+                    app:layout_constraintStart_toStartOf="@id/usernameTextView"
+                    app:layout_constraintEnd_toEndOf="@id/usernameTextView"/>
+
+                <!-- Followers -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/followersIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageContainer"
+                    app:shapeAppearanceOverlay="@style/circleImageViewStyle"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/followersCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/_500"
+                    android:textColor="@color/grays"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@id/followersIcon"
+                    app:layout_constraintStart_toEndOf="@id/followersIcon"
+                    app:layout_constraintTop_toTopOf="@id/followersIcon" />
+
+                <TextView
+                    android:id="@+id/followers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/followers"
+                    android:textColor="@color/grays"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/followersIcon"
+                    app:layout_constraintStart_toEndOf="@+id/followersCount"
+                    app:layout_constraintTop_toTopOf="@id/followersIcon" />
+
+                <!-- Following -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/followingIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followersIcon"
+                    app:shapeAppearanceOverlay="@style/circleImageViewStyle"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/followingCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/_700"
+                    android:textColor="@color/grays"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@id/followingIcon"
+                    app:layout_constraintStart_toEndOf="@id/followingIcon"
+                    app:layout_constraintTop_toTopOf="@id/followingIcon" />
+
+                <TextView
+                    android:id="@+id/following"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/following"
+                    android:textColor="@color/grays"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/followingIcon"
+                    app:layout_constraintStart_toEndOf="@+id/followingCount"
+                    app:layout_constraintTop_toTopOf="@id/followingIcon" />
+
+                <!-- Small Circle Images -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/smallImage1"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followingIcon"
+                    tools:src="@tools:sample/avatars" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/smallImage2"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@id/smallImage1"
+                    app:layout_constraintTop_toBottomOf="@id/followingIcon"
+                    tools:src="@tools:sample/avatars" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/smallImage3"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@id/smallImage2"
+                    app:layout_constraintTop_toBottomOf="@id/followingIcon"
+                    tools:src="@tools:sample/avatars" />
+
+                <!-- Tabs Layout -->
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabsLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/smallImage1"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <!-- Content ViewPager -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

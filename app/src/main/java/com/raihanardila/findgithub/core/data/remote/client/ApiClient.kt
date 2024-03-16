@@ -1,5 +1,6 @@
 package com.raihanardila.findgithub.core.data.remote.client
 
+import android.util.Log
 import com.raihanardila.findgithub.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -9,11 +10,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiClient {
 
     private val authInterceptor = Interceptor { chain ->
-        val request = chain.request().newBuilder()
-            .addHeader("Authorization", "Bearer ${BuildConfig.API_TOKEN}")
-            .build()
-        chain.proceed(request)
+        val token = BuildConfig.API_TOKEN
+        if (token.isNotEmpty()) {
+            Log.d("ApiClient", "Token used: $token")
+            val request = chain.request().newBuilder()
+                .addHeader("Authorization", "Bearer $token")
+                .build()
+            chain.proceed(request)
+        } else {
+            Log.e("ApiClient", "Error: Token is null or empty")
+            println("Error: Token is null or empty")
+            chain.proceed(chain.request())
+        }
     }
+
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(authInterceptor)

@@ -1,31 +1,35 @@
 package com.raihanardila.findgithub.core.data.remote.response
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class DetailUsersResponse(
     val login: String,
+    val username: String,
+    val name: String?,
     val id: Int,
-    @SerialName("avatar_url")
+
+    @SerializedName("avatar_url")
     val avatarURL: String,
 
-    @SerialName("gravatar_id")
+    @SerializedName("gravatar_id")
     val gravatarID: String,
 
     val url: String,
 
-    @SerialName("html_url")
+    @SerializedName("html_url")
     val htmlURL: String,
 
-    @SerialName("followers_url")
-    val followersURL: String,
+    val followers: String,
 
-    @SerialName("following_url")
-    val followingURL: String,
+    val following: String,
 
-    @SerialName("repos_url")
+    @SerializedName("repos_url")
     val reposURL: String,
 
-    @SerialName("starred_url")
+    @SerializedName("starred_url")
     val starredURL: String,
 
-)
+    )

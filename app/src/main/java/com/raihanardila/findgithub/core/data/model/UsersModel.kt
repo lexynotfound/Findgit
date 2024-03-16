@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UsersModel(
     val login: String,
+    val username: String,
+    val name: String ?,
     val id: Int,
 
     @SerializedName("node_id")

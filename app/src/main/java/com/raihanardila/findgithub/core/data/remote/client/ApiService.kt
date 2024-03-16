@@ -15,10 +15,10 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
+
     //Endpoint Search Users
     @GET("search/users")
     suspend fun searchUsers(
-        @Header("Authorization") token: String = "Bearer ${BuildConfig.API_TOKEN}",
         @Query("q") query: String
     ): Response<UsersResponse>
 
@@ -32,21 +32,18 @@ interface ApiService {
     // Endpoint Get User by Username
     @GET("users/{username}")
     suspend fun getUserByUsername(
-        @Header("Authorization") token: String = "Bearer ${BuildConfig.API_TOKEN}",
         @Path("username") username: String
     ): Response<DetailUsersResponse>
 
     // Endpoint Get Followers by Username
     @GET("users/{username}/followers")
     suspend fun getUserFollowers(
-        @Header("Authorization") token: String = "Bearer ${BuildConfig.API_TOKEN}",
         @Path("username") username: String
     ): Response<List<UsersModel>>
 
     // Endpoint Get Following by Username
     @GET("users/{username}/following")
     suspend fun getUserFollowing(
-        @Header("Authorization") token: String = "Bearer ${BuildConfig.API_TOKEN}",
         @Path("username") username: String
     ): Response<List<UsersModel>>
 
@@ -54,18 +51,13 @@ interface ApiService {
     // Endpoint untuk mendapatkan readme dari repositori
     @GET("repos/{owner}/{repo}/readme")
     suspend fun getReadme(
-        @Header("Authorization") token: String = "Bearer ${BuildConfig.API_TOKEN}",
-        @Path("owner") owner: String,
-        @Path("repo") repo: String
+        @Path("owner") owner: String, @Path("repo") repo: String
     ): Response<ReadmeResponse>
 
     // Endpoint Get Repository by Owner and Repo Name
     @GET("repos/{owner}/{repo}")
     suspend fun getRepo(
-        @Header("Authorization") token: String = "Bearer ${BuildConfig.API_TOKEN}",
-        @Path("owner") owner: String,
-        @Path("repo") repo: String
+        @Path("owner") owner: String, @Path("repo") repo: String
     ): Response<ReposResponse>
-
 
 }

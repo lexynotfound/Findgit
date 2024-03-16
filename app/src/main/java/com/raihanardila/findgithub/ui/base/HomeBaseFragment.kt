@@ -1,5 +1,8 @@
+// HomeBaseFragment.kt
 package com.raihanardila.findgithub.ui.base
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.raihanardila.findgithub.R
+import com.raihanardila.findgithub.core.data.model.UsersModel
 import com.raihanardila.findgithub.databinding.FragmentHomeBaseBinding
 import com.raihanardila.findgithub.ui.adapter.UserAdapter
 import com.raihanardila.findgithub.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
-class HomeBaseFragment : Fragment() {
+class HomeBaseFragment : Fragment(), UserAdapter.OnUserClickListener {
 
     private lateinit var binding: FragmentHomeBaseBinding
     private lateinit var viewModel: HomeViewModel
@@ -28,19 +33,19 @@ class HomeBaseFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         showLoading(false)
         setupRecyclerView()
 
-        binding.searchBar.setOnClickListener {
-            // Handle search action here
-            // Example: searchUser()
-        }
-
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        // Load all users when fragment is created
+
+        userAdapter = UserAdapter()
+        userAdapter.setOnUserClickListener(this)
+        binding.rvUser.adapter = userAdapter
+
         lifecycleScope.launch {
             viewModel.getAllUserss()
         }
@@ -49,20 +54,14 @@ class HomeBaseFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        userAdapter = UserAdapter()
         binding.rvUser.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = userAdapter
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         }
     }
 
     private fun showLoading(state: Boolean) {
-        if (state) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     private fun observeData() {
@@ -71,17 +70,15 @@ class HomeBaseFragment : Fragment() {
         }
     }
 
+    override fun onUserClick(data: UsersModel) {
+        val fragment = HomeDetailFragment()
+        val bundle = Bundle()
+        bundle.putString(HomeDetailFragment.EXTRA_USERNAME, data.login)
+        fragment.arguments = bundle
 
-
-    // Uncomment and implement searchUser() function if needed
-    /*
-    private fun searchUser() {
-        val query = binding.etQuery.text.toString()
-        if (query.isNotEmpty()) {
-            viewModel.setSearchUsers(query)
-        } else {
-            Toast.makeText(requireContext(), "Please enter a query", Toast.LENGTH_SHORT).show()
-        }
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
-    */
 }
