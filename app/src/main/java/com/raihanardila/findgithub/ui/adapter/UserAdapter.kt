@@ -1,32 +1,36 @@
 package com.raihanardila.findgithub.ui.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.UsersModel
+import com.raihanardila.findgithub.util.UserDiffCallback
 import de.hdodenhof.circleimageview.CircleImageView
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private val userList = ArrayList<UsersModel>()
+    private var userList = ArrayList<UsersModel>()
     private var onUserClickListener: OnUserClickListener? = null
 
     fun setOnUserClickListener(listener: OnUserClickListener) {
         this.onUserClickListener = listener
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setUsers(users: List<UsersModel>) {
+    fun setUsers(newList: List<UsersModel>) {
+        val diffCallback = UserDiffCallback(userList, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         userList.clear()
-        userList.addAll(users)
-        notifyDataSetChanged()
+        userList.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val itemView =

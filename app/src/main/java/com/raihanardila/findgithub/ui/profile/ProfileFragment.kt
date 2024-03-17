@@ -19,25 +19,11 @@ import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.databinding.FragmentProfileBinding
 import com.raihanardila.findgithub.ui.adapter.ProfilePagerAdapter
 import com.raihanardila.findgithub.ui.base.HomeDetailFragment
-import com.raihanardila.findgithub.ui.viewmodel.FollowersViewModel
-import com.raihanardila.findgithub.ui.viewmodel.FollowingViewModel
 import com.raihanardila.findgithub.ui.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 import java.nio.charset.StandardCharsets
 
 class ProfileFragment : Fragment() {
-
-
-    companion object {
-        const val EXTRA_USERNAME = "extra_username"
-        const val EXTRA_REPO = "extra_repo"
-        const val EXTRA_OWNER = "extra_owner"
-        @StringRes
-        private val TAB_TITLES = intArrayOf(
-            R.string.followers,
-            R.string.following
-        )
-    }
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
@@ -91,9 +77,6 @@ class ProfileFragment : Fragment() {
                 .load(user.avatarURL)
                 .transform(CircleCrop())
                 .into(binding.profileImage)
-
-
-
         })
 
         // Observasi data pengikut (followers)
@@ -153,7 +136,15 @@ class ProfileFragment : Fragment() {
         val decodedBytes = Base64.decode(encodedText, Base64.DEFAULT)
         return String(decodedBytes, StandardCharsets.UTF_8)
     }
+
+    companion object {
+        const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_REPO = "extra_repo"
+        const val EXTRA_OWNER = "extra_owner"
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
+    }
 }
-
-
-

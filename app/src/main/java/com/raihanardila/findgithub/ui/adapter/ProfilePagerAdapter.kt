@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -20,7 +18,7 @@ class ProfilePagerAdapter(private val context: Context, private val bundle: Bund
     @StringRes
     private val TAB_TITLES = intArrayOf(R.string.tab_1, R.string.tab_2)
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = TAB_TITLES.size
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
@@ -34,4 +32,5 @@ class ProfilePagerAdapter(private val context: Context, private val bundle: Bund
         tab.text = context.resources.getString(TAB_TITLES[position])
     }
 }
+
 
