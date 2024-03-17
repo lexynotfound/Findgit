@@ -6,13 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.google.android.material.tabs.TabLayoutMediator
+import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.databinding.FragmentProfileBinding
+import com.raihanardila.findgithub.ui.adapter.ProfilePagerAdapter
+import com.raihanardila.findgithub.ui.base.HomeDetailFragment
 import com.raihanardila.findgithub.ui.viewmodel.FollowersViewModel
 import com.raihanardila.findgithub.ui.viewmodel.FollowingViewModel
 import com.raihanardila.findgithub.ui.viewmodel.ProfileViewModel
@@ -21,8 +27,21 @@ import java.nio.charset.StandardCharsets
 
 class ProfileFragment : Fragment() {
 
+
+    companion object {
+        const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_REPO = "extra_repo"
+        const val EXTRA_OWNER = "extra_owner"
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
+    }
+
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +60,8 @@ class ProfileFragment : Fragment() {
 
         // Tampilkan ProgressBar saat memuat data
         binding.progressBar.visibility = View.VISIBLE
+
+        val username = "lexynotfound"
 
         // Panggil method fetchUser dan fetchReadme menggunakan lifecycleScope
         lifecycleScope.launch {
@@ -115,6 +136,16 @@ class ProfileFragment : Fragment() {
             // Update tampilan dengan konten README yang sudah diformat
             binding.bioTextView.text = formattedContent
         })
+
+        // Initialize ViewPager
+        val profilePagerAdapter = ProfilePagerAdapter(requireContext(), Bundle())
+        viewPager = binding.viewPager
+        viewPager.adapter = profilePagerAdapter
+
+        // Menghubungkan TabLayout dengan ViewPager
+        TabLayoutMediator(binding.tabsLayout, viewPager) { tab, position ->
+            tab.text = getString(TAB_TITLES[position])
+        }.attach()
     }
 
     // Fungsi untuk mendekode teks dari Base64

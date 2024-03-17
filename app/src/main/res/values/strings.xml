@@ -22,4 +22,5 @@
     <string name="iconback">IconBack</string>
     <string name="tab_1">followers</string>
     <string name="tab_2">following</string>
+    <string name="searchbar_hint">Search</string>
 </resources>

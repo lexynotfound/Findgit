@@ -16,6 +16,7 @@ import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.UsersModel
 import com.raihanardila.findgithub.databinding.FragmentHomeBaseBinding
 import com.raihanardila.findgithub.ui.adapter.UserAdapter
+import com.raihanardila.findgithub.ui.search.SearchActivity
 import com.raihanardila.findgithub.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
@@ -39,6 +40,11 @@ class HomeBaseFragment : Fragment(), UserAdapter.OnUserClickListener {
 
         showLoading(false)
         setupRecyclerView()
+
+        binding.searchBar.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
+        }
 
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 

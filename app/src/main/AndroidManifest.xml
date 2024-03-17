@@ -16,6 +16,12 @@
         android:theme="@style/Theme.FindGithub"
         tools:targetApi="31">
         <activity
+            android:name=".ui.base.HomeDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
