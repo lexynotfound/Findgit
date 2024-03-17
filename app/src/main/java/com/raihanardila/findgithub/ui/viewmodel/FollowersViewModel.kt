@@ -27,7 +27,9 @@ class FollowersViewModel : ViewModel() {
                 val response = apiService.getUserFollowers(username)
                 if (response.isSuccessful) {
                     _userFollowers.postValue(response.body())
-                    Log.d("FollowersViewModel", "Successfully fetched followers for user: $username")
+                    Log.d(
+                        "FollowersViewModel", "Successfully fetched followers for user: $username"
+                    )
                 } else {
                     _error.postValue("Failed to fetch followers: ${response.code()}")
                     Log.e("FollowersViewModel", "Failed to fetch followers for user: $username")

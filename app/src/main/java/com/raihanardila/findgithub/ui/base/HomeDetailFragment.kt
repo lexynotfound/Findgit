@@ -31,10 +31,10 @@ class HomeDetailFragment : Fragment() {
         const val EXTRA_USERNAME = "extra_username"
         const val EXTRA_REPO = "extra_repo"
         const val EXTRA_OWNER = "extra_owner"
+
         @StringRes
         private val TAB_TITLES = intArrayOf(
-            R.string.followers,
-            R.string.following
+            R.string.followers, R.string.following
         )
     }
 
@@ -45,8 +45,7 @@ class HomeDetailFragment : Fragment() {
     private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -98,9 +97,7 @@ class HomeDetailFragment : Fragment() {
                 nameTextView.text = user.name
                 followersCount.text = user.followers
                 followingCount.text = user.following
-                Glide.with(this@HomeDetailFragment)
-                    .load(user.avatarURL)
-                    .transform(CircleCrop())
+                Glide.with(this@HomeDetailFragment).load(user.avatarURL).transform(CircleCrop())
                     .into(profileImage)
             }
             binding.progressBar.visibility = View.GONE
@@ -108,19 +105,15 @@ class HomeDetailFragment : Fragment() {
 
         followersViewModel.userFollowers.observe(viewLifecycleOwner, Observer { followers ->
             if (followers.isNotEmpty()) {
-                Glide.with(this@HomeDetailFragment)
-                    .load(followers[0].avatarURL)
-                    .transform(CircleCrop())
-                    .into(binding.followersIcon)
+                Glide.with(this@HomeDetailFragment).load(followers[0].avatarURL)
+                    .transform(CircleCrop()).into(binding.followersIcon)
             }
         })
 
         followingViewModel.userFollowing.observe(viewLifecycleOwner, Observer { following ->
             if (following.isNotEmpty()) {
-                Glide.with(this@HomeDetailFragment)
-                    .load(following[0].avatarURL)
-                    .transform(CircleCrop())
-                    .into(binding.followingIcon)
+                Glide.with(this@HomeDetailFragment).load(following[0].avatarURL)
+                    .transform(CircleCrop()).into(binding.followingIcon)
             }
         })
 
@@ -141,15 +134,12 @@ class HomeDetailFragment : Fragment() {
         imageUrls.forEach { imageUrl ->
             val imageView = ImageView(requireContext()).apply {
                 layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             }
 
             // Load image using Glide into the ImageView
-            Glide.with(this@HomeDetailFragment)
-                .load(imageUrl)
-                .into(imageView)
+            Glide.with(this@HomeDetailFragment).load(imageUrl).into(imageView)
 
             // Add the ImageView to the image container
             binding.imageContainer.addView(imageView)
@@ -159,12 +149,12 @@ class HomeDetailFragment : Fragment() {
 
     private fun extractImageUrls(readmeContent: String): List<String> {
         val imageUrlRegex = "(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)".toRegex()
-        return imageUrlRegex.findAll(readmeContent)
-            .map { it.value }
-            .toList()
+        return imageUrlRegex.findAll(readmeContent).map { it.value }.toList()
     }
 
-    private fun replaceImageUrlsWithPlaceholder(readmeContent: String, imageUrls: List<String>): String {
+    private fun replaceImageUrlsWithPlaceholder(
+        readmeContent: String, imageUrls: List<String>
+    ): String {
         var formattedContent = readmeContent
         imageUrls.forEach { imageUrl ->
             formattedContent = formattedContent.replace(imageUrl, "[IMAGE]")

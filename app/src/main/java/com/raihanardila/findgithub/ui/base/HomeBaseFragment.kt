@@ -27,8 +27,7 @@ class HomeBaseFragment : Fragment(), UserAdapter.OnUserClickListener {
     private lateinit var userAdapter: UserAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBaseBinding.inflate(inflater, container, false)
         return binding.root
@@ -62,7 +61,11 @@ class HomeBaseFragment : Fragment(), UserAdapter.OnUserClickListener {
     private fun setupRecyclerView() {
         binding.rvUser.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(), DividerItemDecoration.VERTICAL
+                )
+            )
         }
     }
 

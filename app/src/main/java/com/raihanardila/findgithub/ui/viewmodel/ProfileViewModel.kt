@@ -42,9 +42,15 @@ class ProfileViewModel : ViewModel() {
                 val userResponse = apiService.getUserByUsername(username = "lexynotfound")
                 if (userResponse.isSuccessful) {
                     val user = userResponse.body()
-                    _user.postValue(user ?: return@launch) // Cek nullability sebelum mengakses body()
+                    _user.postValue(
+                        user ?: return@launch
+                    ) // Cek nullability sebelum mengakses body()
                 } else {
-                    _error.postValue("Failed to fetch user data: ${userResponse.errorBody()?.string()}")
+                    _error.postValue(
+                        "Failed to fetch user data: ${
+                            userResponse.errorBody()?.string()
+                        }"
+                    )
                 }
             } catch (e: Exception) {
                 _error.postValue("Error occurred while fetching user data: ${e.message}")
@@ -55,12 +61,19 @@ class ProfileViewModel : ViewModel() {
     fun fetchReadme() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val readmeResponse = apiService.getReadme(owner = "lexynotfound", repo = "lexynotfound")
+                val readmeResponse =
+                    apiService.getReadme(owner = "lexynotfound", repo = "lexynotfound")
                 if (readmeResponse.isSuccessful) {
                     val readme = readmeResponse.body()
-                    _readme.postValue(readme ?: return@launch) // Cek nullability sebelum mengakses body()
+                    _readme.postValue(
+                        readme ?: return@launch
+                    ) // Cek nullability sebelum mengakses body()
                 } else {
-                    _error.postValue("Failed to fetch readme data: ${readmeResponse.errorBody()?.string()}")
+                    _error.postValue(
+                        "Failed to fetch readme data: ${
+                            readmeResponse.errorBody()?.string()
+                        }"
+                    )
                 }
             } catch (e: Exception) {
                 _error.postValue("Error occurred while fetching readme data: ${e.message}")

@@ -34,15 +34,24 @@ class HomeDetailViewModel : ViewModel() {
                 val userResponse = apiService.getUserByUsername(username)
                 if (userResponse.isSuccessful) {
                     val user = userResponse.body()
-                    _user.postValue(user ?: return@launch) // Cek nullability sebelum mengakses body()
+                    _user.postValue(
+                        user ?: return@launch
+                    ) // Cek nullability sebelum mengakses body()
                     Log.d("HomeDetailViewModel", "Successfully fetched user data for: $username")
                 } else {
-                    _error.postValue("Failed to fetch user data: ${userResponse.errorBody()?.string()}")
+                    _error.postValue(
+                        "Failed to fetch user data: ${
+                            userResponse.errorBody()?.string()
+                        }"
+                    )
                     Log.e("HomeDetailViewModel", "Failed to fetch user data for: $username")
                 }
             } catch (e: Exception) {
                 _error.postValue("Error occurred while fetching user data: ${e.message}")
-                Log.e("HomeDetailViewModel", "Error occurred while fetching user data: ${e.message}")
+                Log.e(
+                    "HomeDetailViewModel",
+                    "Error occurred while fetching user data: ${e.message}"
+                )
             }
         }
     }
@@ -53,15 +62,24 @@ class HomeDetailViewModel : ViewModel() {
                 val readmeResponse = apiService.getReadme(owner, repo)
                 if (readmeResponse.isSuccessful) {
                     val readme = readmeResponse.body()
-                    _readme.postValue(readme ?: return@launch) // Cek nullability sebelum mengakses body()
+                    _readme.postValue(
+                        readme ?: return@launch
+                    ) // Cek nullability sebelum mengakses body()
                     Log.d("HomeDetailViewModel", "Successfully fetched README for: $repo by $owner")
                 } else {
-                    _error.postValue("Failed to fetch readme data: ${readmeResponse.errorBody()?.string()}")
+                    _error.postValue(
+                        "Failed to fetch readme data: ${
+                            readmeResponse.errorBody()?.string()
+                        }"
+                    )
                     Log.e("HomeDetailViewModel", "Failed to fetch README for: $repo by $owner")
                 }
             } catch (e: Exception) {
                 _error.postValue("Error occurred while fetching README data: ${e.message}")
-                Log.e("HomeDetailViewModel", "Error occurred while fetching README for: $repo by $owner")
+                Log.e(
+                    "HomeDetailViewModel",
+                    "Error occurred while fetching README for: $repo by $owner"
+                )
             }
         }
     }

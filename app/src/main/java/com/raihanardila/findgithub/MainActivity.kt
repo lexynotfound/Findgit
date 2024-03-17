@@ -35,16 +35,19 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(HomeBaseFragment())
                     true
                 }
+
                 R.id.search -> {
                     hideActionBar()
                     loadFragment(SearchFragment())
                     true
                 }
+
                 R.id.fav -> {
                     hideActionBar()
                     loadFragment(FavoriteFragment())
                     true
                 }
+
                 R.id.profile -> {
                     hideActionBar()
                     loadFragment(ProfileFragment())

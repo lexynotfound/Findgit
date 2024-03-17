@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class OwnerResponse(
     val login: String,
     val id: Long,
-    val name: String ?,
+    val name: String?,
 
     @SerializedName("avatar_url")
     val avatarUrl: String,

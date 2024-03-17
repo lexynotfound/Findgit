@@ -47,7 +47,11 @@ class SearchActivity : AppCompatActivity(), UserAdapter.OnUserClickListener {
 
         binding.apply {
             rvUser.layoutManager = LinearLayoutManager(this@SearchActivity)
-            rvUser.addItemDecoration(DividerItemDecoration(this@SearchActivity, DividerItemDecoration.VERTICAL))
+            rvUser.addItemDecoration(
+                DividerItemDecoration(
+                    this@SearchActivity, DividerItemDecoration.VERTICAL
+                )
+            )
             rvUser.adapter = userAdapter
 
             searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

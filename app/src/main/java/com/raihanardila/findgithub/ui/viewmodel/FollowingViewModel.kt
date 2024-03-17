@@ -26,7 +26,9 @@ class FollowingViewModel : ViewModel() {
                 val response = apiService.getUserFollowing(username)
                 if (response.isSuccessful) {
                     _userFollowing.postValue(response.body())
-                    Log.d("FollowingViewModel", "Successfully fetched following for user: $username")
+                    Log.d(
+                        "FollowingViewModel", "Successfully fetched following for user: $username"
+                    )
                 } else {
                     _error.postValue("Failed to fetch following: ${response.code()}")
                     Log.e("FollowingViewModel", "Failed to fetch following for user: $username")

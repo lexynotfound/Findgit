@@ -22,8 +22,7 @@ class FollowingFragment : Fragment() {
     private lateinit var username: String
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFollowingBinding.inflate(inflater, container, false)
         return binding.root

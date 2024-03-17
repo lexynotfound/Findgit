@@ -16,7 +16,7 @@ import com.raihanardila.findgithub.ui.following.FollowingFragment
 
 class ProfilePagerAdapter(private val context: Context, private val bundle: Bundle) :
     FragmentStateAdapter(context as FragmentActivity), TabLayoutMediator.TabConfigurationStrategy {
-        
+
     @StringRes
     private val TAB_TITLES = intArrayOf(R.string.tab_1, R.string.tab_2)
 

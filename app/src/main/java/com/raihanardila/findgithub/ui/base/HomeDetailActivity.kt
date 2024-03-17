@@ -1,5 +1,6 @@
 package com.raihanardila.findgithub.ui.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.android.material.tabs.TabLayoutMediator
+import com.raihanardila.findgithub.MainActivity
 import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.databinding.ActivityHomeDetailBinding
 import com.raihanardila.findgithub.ui.adapter.ProfilePagerAdapter
@@ -30,10 +32,10 @@ class HomeDetailActivity : AppCompatActivity() {
         const val EXTRA_USERNAME = "extra_username"
         const val EXTRA_REPO = "extra_repo"
         const val EXTRA_OWNER = "extra_owner"
+
         @StringRes
         private val TAB_TITLES = intArrayOf(
-            R.string.followers,
-            R.string.following
+            R.string.followers, R.string.following
         )
     }
 
@@ -56,8 +58,11 @@ class HomeDetailActivity : AppCompatActivity() {
 
         val username = intent.getStringExtra(EXTRA_USERNAME)
 
-        binding.BackButton.setOnClickListener {
-            this.supportFragmentManager.popBackStack()
+        binding.BackButton.setOnClickListener{
+            //Create an Intent to Start HomeFragment
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
 
         // Initialize ViewPager
@@ -95,9 +100,7 @@ class HomeDetailActivity : AppCompatActivity() {
                 nameTextView.text = user.name
                 followersCount.text = user.followers
                 followingCount.text = user.following
-                Glide.with(this@HomeDetailActivity)
-                    .load(user.avatarURL)
-                    .transform(CircleCrop())
+                Glide.with(this@HomeDetailActivity).load(user.avatarURL).transform(CircleCrop())
                     .into(profileImage)
             }
             binding.progressBar.visibility = View.GONE
@@ -105,19 +108,15 @@ class HomeDetailActivity : AppCompatActivity() {
 
         followersViewModel.userFollowers.observe(this, Observer { followers ->
             if (followers.isNotEmpty()) {
-                Glide.with(this@HomeDetailActivity)
-                    .load(followers[0].avatarURL)
-                    .transform(CircleCrop())
-                    .into(binding.followersIcon)
+                Glide.with(this@HomeDetailActivity).load(followers[0].avatarURL)
+                    .transform(CircleCrop()).into(binding.followersIcon)
             }
         })
 
         followingViewModel.userFollowing.observe(this, Observer { following ->
             if (following.isNotEmpty()) {
-                Glide.with(this@HomeDetailActivity)
-                    .load(following[0].avatarURL)
-                    .transform(CircleCrop())
-                    .into(binding.followingIcon)
+                Glide.with(this@HomeDetailActivity).load(following[0].avatarURL)
+                    .transform(CircleCrop()).into(binding.followingIcon)
             }
         })
 
@@ -137,15 +136,12 @@ class HomeDetailActivity : AppCompatActivity() {
         imageUrls.forEach { imageUrl ->
             val imageView = ImageView(this@HomeDetailActivity).apply {
                 layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             }
 
             // Load image using Glide into the ImageView
-            Glide.with(this@HomeDetailActivity)
-                .load(imageUrl)
-                .into(imageView)
+            Glide.with(this@HomeDetailActivity).load(imageUrl).into(imageView)
 
             // Add the ImageView to the image container
             binding.imageContainer.addView(imageView)
@@ -159,8 +155,6 @@ class HomeDetailActivity : AppCompatActivity() {
 
     private fun extractImageUrls(readmeContent: String): List<String> {
         val imageUrlRegex = "(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)".toRegex()
-        return imageUrlRegex.findAll(readmeContent)
-            .map { it.value }
-            .toList()
+        return imageUrlRegex.findAll(readmeContent).map { it.value }.toList()
     }
 }

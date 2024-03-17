@@ -29,8 +29,8 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_users, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_users, parent, false)
         return UserViewHolder(itemView)
     }
 
@@ -39,9 +39,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         holder.usernameTextView.text = currentUser.login
 
         // Load image using Glide
-        Glide.with(holder.itemView)
-            .load(currentUser.avatarURL)
-            .transform(CircleCrop())
+        Glide.with(holder.itemView).load(currentUser.avatarURL).transform(CircleCrop())
             .into(holder.avatarImageView)
 
         holder.itemView.setOnClickListener {
