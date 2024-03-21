@@ -1,5 +1,3 @@
-package com.raihanardila.findgithub.ui.adapter
-
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,14 +7,18 @@ import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.FavoriteUsersModel
 import com.raihanardila.findgithub.databinding.ItemUsersBinding
 
-class FavoriteUserAdapter(private val onFavoriteDeleteClickListener: OnFavoriteDeleteClickListener) : RecyclerView.Adapter<FavoriteUserAdapter.FavViewHolder>() {
-    val listFavorite = ArrayList<FavoriteUsersModel>()
+class FavoriteUserAdapter(private val onFavoriteDeleteClickListener: OnFavoriteDeleteClickListener, private val listener: OnFavoriteUserClickListener) : RecyclerView.Adapter<FavoriteUserAdapter.FavViewHolder>() {
+    private val listFavorite = ArrayList<FavoriteUsersModel>()
 
     @SuppressLint("NotifyDataSetChanged")
     fun setListNotes(listFavorite: List<FavoriteUsersModel>) {
         this.listFavorite.clear()
         this.listFavorite.addAll(listFavorite)
         notifyDataSetChanged()
+    }
+
+    fun getFavoriteUserAt(position: Int): FavoriteUsersModel {
+        return listFavorite[position]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavViewHolder {
@@ -47,6 +49,13 @@ class FavoriteUserAdapter(private val onFavoriteDeleteClickListener: OnFavoriteD
                         onFavoriteDeleteClickListener.onFavoriteDeleteClick(position)
                     }
                 }
+
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onFavoriteUserClick(listFavorite[position].username)
+                    }
+                }
             }
         }
     }
@@ -55,6 +64,9 @@ class FavoriteUserAdapter(private val onFavoriteDeleteClickListener: OnFavoriteD
         fun onFavoriteDeleteClick(position: Int)
     }
 
+    interface OnFavoriteUserClickListener {
+        fun onFavoriteUserClick(username: String)
+    }
 
     fun removeItem(position: Int) {
         listFavorite.removeAt(position)

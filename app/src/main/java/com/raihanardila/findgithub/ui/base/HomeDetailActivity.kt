@@ -48,6 +48,7 @@ class HomeDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityHomeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

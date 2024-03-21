@@ -1,5 +1,7 @@
 package com.raihanardila.findgithub.ui.favorite
 
+import FavoriteUserAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raihanardila.findgithub.databinding.FragmentFavoriteBinding
-import com.raihanardila.findgithub.ui.adapter.FavoriteUserAdapter
 import com.raihanardila.findgithub.ui.viewmodel.HomeViewModel
+import com.raihanardila.findgithub.ui.base.HomeDetailActivity
 
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : Fragment(), FavoriteUserAdapter.OnFavoriteUserClickListener {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var adapter: FavoriteUserAdapter
     private lateinit var viewModel: HomeViewModel
@@ -32,11 +34,11 @@ class FavoriteFragment : Fragment() {
         adapter = FavoriteUserAdapter(object : FavoriteUserAdapter.OnFavoriteDeleteClickListener {
             override fun onFavoriteDeleteClick(position: Int) {
                 // Panggil method untuk menghapus item dari daftar favorit
-                favoriteViewModel.deleteFavoriteUsers(adapter.listFavorite[position])
+                favoriteViewModel.deleteFavoriteUsers(adapter.getFavoriteUserAt(position))
                 // Hapus item dari adapter setelah dihapus dari daftar favorit
                 adapter.removeItem(position)
             }
-        })
+        }, this)
 
         binding.rvUser.layoutManager = LinearLayoutManager(requireContext())
         binding.rvUser.setHasFixedSize(true)
@@ -48,6 +50,12 @@ class FavoriteFragment : Fragment() {
         }
     }
 
+    override fun onFavoriteUserClick(username: String) {
+        val intent = Intent(requireContext(), HomeDetailActivity::class.java).apply {
+            putExtra(HomeDetailActivity.EXTRA_USERNAME, username)
+        }
+        startActivity(intent)
+    }
 
     private fun obtainViewModel(activity: AppCompatActivity): HomeViewModel {
         val factory = HomeViewModel.ViewModelFactory(activity.application)
