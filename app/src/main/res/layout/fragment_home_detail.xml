@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/Theme.AppCompat.DayNight"
+                app:popupTheme="@style/Theme.Material3.DayNight"
                 tools:layout_editor_absoluteX="3dp"
                 tools:layout_editor_absoluteY="9dp">
 
