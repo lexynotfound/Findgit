@@ -1,5 +1,6 @@
 package com.raihanardila.findgithub.ui.following
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.UsersModel
 import com.raihanardila.findgithub.databinding.FragmentFollowingBinding
 import com.raihanardila.findgithub.ui.adapter.UserAdapter
+import com.raihanardila.findgithub.ui.base.HomeDetailActivity
 import com.raihanardila.findgithub.ui.base.HomeDetailFragment
 import com.raihanardila.findgithub.ui.interfaces.OnLoveButtonClickListener
 import com.raihanardila.findgithub.ui.viewmodel.FollowingViewModel
@@ -36,6 +38,7 @@ class FollowingFragment : Fragment(), OnLoveButtonClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progresBar.visibility = View.VISIBLE
         userViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
 
         val args = arguments
@@ -45,6 +48,9 @@ class FollowingFragment : Fragment(), OnLoveButtonClickListener {
         adapter.setOnUserClickListener(object : UserAdapter.OnUserClickListener {
             override fun onUserClick(user: UsersModel) {
                 // Handle user click action here
+                val intent = Intent(requireContext(), HomeDetailActivity::class.java)
+                intent.putExtra(HomeDetailActivity.EXTRA_USERNAME, user.login) // Kirim data pengguna ke HomeDetailActivity
+                startActivity(intent)
             }
         })
 
@@ -57,10 +63,23 @@ class FollowingFragment : Fragment(), OnLoveButtonClickListener {
         viewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
         viewModel.userFollowing.observe(viewLifecycleOwner) { users ->
             adapter.setUsers(users)
+            binding.progresBar.visibility = View.GONE
         }
 
         viewModel.getUserFollowing(username)
     }
+
+    /*override fun onUserClick(data: UsersModel) {
+        val fragment = HomeDetailFragment()
+        val bundle = Bundle()
+        bundle.putString(HomeDetailActivity.EXTRA_USERNAME, data.login)
+        fragment.arguments = bundle
+
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

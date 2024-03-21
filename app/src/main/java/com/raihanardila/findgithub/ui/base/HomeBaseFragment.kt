@@ -39,7 +39,7 @@ class HomeBaseFragment : Fragment(), UserAdapter.OnUserClickListener, OnLoveButt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showLoading(false)
+        showLoading(true)
         setupRecyclerView()
 
         binding.searchBar.setOnClickListener {
@@ -54,6 +54,7 @@ class HomeBaseFragment : Fragment(), UserAdapter.OnUserClickListener, OnLoveButt
         binding.rvUser.adapter = userAdapter
 
         lifecycleScope.launch {
+            binding.progressBar.visibility = View.GONE
             viewModel.getAllUserss()
         }
 

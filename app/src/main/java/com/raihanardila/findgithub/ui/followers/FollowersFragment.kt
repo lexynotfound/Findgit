@@ -1,5 +1,6 @@
 package com.raihanardila.findgithub.ui.followers
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.UsersModel
 import com.raihanardila.findgithub.databinding.FragmentFollowersBinding
 import com.raihanardila.findgithub.ui.adapter.UserAdapter
+import com.raihanardila.findgithub.ui.base.HomeDetailActivity
 import com.raihanardila.findgithub.ui.base.HomeDetailFragment
 import com.raihanardila.findgithub.ui.interfaces.OnLoveButtonClickListener
 import com.raihanardila.findgithub.ui.viewmodel.FollowersViewModel
@@ -36,6 +38,7 @@ class FollowersFragment : Fragment(), OnLoveButtonClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progresBar.visibility = View.VISIBLE
 
         userViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
 
@@ -46,6 +49,9 @@ class FollowersFragment : Fragment(), OnLoveButtonClickListener {
         adapter.setOnUserClickListener(object : UserAdapter.OnUserClickListener {
             override fun onUserClick(user: UsersModel) {
                 // Handle user click action here
+                val intent = Intent(requireContext(), HomeDetailActivity::class.java)
+                intent.putExtra(HomeDetailActivity.EXTRA_USERNAME, user.login) // Kirim data pengguna ke HomeDetailActivity
+                startActivity(intent)
             }
         })
 
@@ -58,6 +64,8 @@ class FollowersFragment : Fragment(), OnLoveButtonClickListener {
         viewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
         viewModel.userFollowers.observe(viewLifecycleOwner) { users ->
             adapter.setUsers(users)
+
+            binding.progresBar.visibility = View.GONE
         }
 
         viewModel.getUserFollowers(username)

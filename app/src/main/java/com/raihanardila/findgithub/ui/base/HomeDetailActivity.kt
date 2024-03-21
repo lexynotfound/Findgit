@@ -142,6 +142,10 @@ class HomeDetailActivity : AppCompatActivity() {
         })
     }
 
+    private fun showLoading(state: Boolean) {
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+    }
+
     private fun displayReadmeContent(readmeContent: String) {
         val imageUrls = extractImageUrls(readmeContent)
 
