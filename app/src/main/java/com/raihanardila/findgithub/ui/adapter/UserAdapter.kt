@@ -10,10 +10,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.UsersModel
+import com.raihanardila.findgithub.ui.interfaces.OnLoveButtonClickListener
 import com.raihanardila.findgithub.util.UserDiffCallback
 import de.hdodenhof.circleimageview.CircleImageView
 
-class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter(private val onLoveButtonClickListener: OnLoveButtonClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     private var userList = ArrayList<UsersModel>()
     private var onUserClickListener: OnUserClickListener? = null
@@ -31,10 +32,8 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         diffResult.dispatchUpdatesTo(this)
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_users, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_users, parent, false)
         return UserViewHolder(itemView)
     }
 
@@ -43,11 +42,21 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         holder.usernameTextView.text = currentUser.login
 
         // Load image using Glide
-        Glide.with(holder.itemView).load(currentUser.avatarURL).transform(CircleCrop())
+        Glide
+            .with(holder.itemView)
+            .load(currentUser.avatarURL)
+            .transform(CircleCrop())
             .into(holder.avatarImageView)
 
         holder.itemView.setOnClickListener {
             onUserClickListener?.onUserClick(currentUser)
+        }
+
+        holder.itemView.findViewById<View>(R.id.buttonLove).setOnClickListener {
+            val position = holder.adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                onLoveButtonClickListener.onLoveButtonClick(position)
+            }
         }
     }
 

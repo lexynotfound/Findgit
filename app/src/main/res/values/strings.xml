@@ -3,6 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
+    <string name="share_profile">Bagikan Profil</string>
+    <string name="share_profile_subject">Profil GitHub</string>
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="profile">Profile</string>
@@ -16,11 +18,17 @@
     <string name="following">following</string>
     <string name="cooming_soon">Cooming Soon</string>
     <string name="name">Name</string>
-    <string name="settings">settings</string>
+    <string name="settings">Settings</string>
     <string name="settings_icon_description">Settings</string>
     <string name="fragment_title">Profile</string>
     <string name="iconback">IconBack</string>
     <string name="tab_1">followers</string>
     <string name="tab_2">following</string>
     <string name="searchbar_hint">Search</string>
+    <string name="drk_light">Light/Dark Mode</string>
+    <string name="apperance">Apperance</string>
+    <string name="share">Share</string>
+    <string name="back">Icon Back</string>
+    <string name="design">from lexynotfound</string>
+    <string name="love">stars</string>
 </resources>

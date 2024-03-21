@@ -10,6 +10,7 @@ data class UsersModel(
     val username: String,
     val name: String?,
     val id: Int,
+    var isFavorite: Boolean = false,
 
     @SerializedName("node_id")
     val nodeID: String,

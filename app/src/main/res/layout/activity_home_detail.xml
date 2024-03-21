@@ -13,8 +13,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin">
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+            <!-- Back Button -->
             <ImageButton
                 android:id="@+id/BackButton"
                 android:layout_width="wrap_content"
@@ -26,10 +29,22 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/iconback"
+                android:contentDescription="@string/back"
                 android:padding="1dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/arrow_left" />
+                android:src="@drawable/baseline_arrow_back_24" />
+
+            <!-- Share Button -->
+            <ImageButton
+                android:id="@+id/ShareButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/share"
+                android:padding="8dp"
+                android:src="@drawable/icons8_share" />
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -106,7 +121,6 @@
                 <!-- ImageView for displaying images in README -->
 
                 <!-- Followers -->
-
                 <LinearLayout
                     android:id="@+id/imageContainer"
                     android:layout_width="96dp"
@@ -221,25 +235,21 @@
                     app:layout_constraintTop_toBottomOf="@id/followingIcon"
                     tools:src="@tools:sample/avatars" />
 
-                <!-- Tabs Layout -->
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabsLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/smallImage1"
-                    app:tabGravity="fill"
-                    app:tabMode="fixed" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <!-- Tabs Layout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
     </com.google.android.material.appbar.AppBarLayout>
-    <!-- Content ViewPager -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-
+        <!-- Content ViewPager -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

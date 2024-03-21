@@ -6,6 +6,7 @@ import android.util.Base64
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -48,6 +49,7 @@ class HomeDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeDetailBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(HomeDetailViewModel::class.java)
@@ -100,6 +102,9 @@ class HomeDetailActivity : AppCompatActivity() {
                 nameTextView.text = user.name
                 followersCount.text = user.followers
                 followingCount.text = user.following
+                binding.ShareButton.setOnClickListener {
+                    shareProfile(user.login)
+                }
                 Glide.with(this@HomeDetailActivity).load(user.avatarURL).transform(CircleCrop())
                     .into(profileImage)
             }
@@ -122,6 +127,17 @@ class HomeDetailActivity : AppCompatActivity() {
 
         viewModel.readme.observe(this, Observer { readme ->
             val decodedContent = decodeBase64(readme.content)
+            val formattedContent = decodedContent
+                .split("\n")
+                .joinToString("\n") { line ->
+                    if (line.isNotBlank()) {
+                        "• $line"
+                    } else {
+                        ""
+                    }
+                }
+            // Update tampilan dengan konten README yang sudah diformat
+            binding.bioTextView.text = formattedContent
             displayReadmeContent(decodedContent)
         })
     }
@@ -151,6 +167,20 @@ class HomeDetailActivity : AppCompatActivity() {
     private fun decodeBase64(encodedText: String): String {
         val decodedBytes = Base64.decode(encodedText, Base64.DEFAULT)
         return String(decodedBytes, StandardCharsets.UTF_8)
+    }
+
+    private fun shareProfile(username: String) {
+        // Create URL with username
+        val url = "https://www.github.com/$username"
+
+        // Create intent to share link
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_profile_subject))
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url)
+
+        // Start activity to share
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_profile)))
     }
 
     private fun extractImageUrls(readmeContent: String): List<String> {
