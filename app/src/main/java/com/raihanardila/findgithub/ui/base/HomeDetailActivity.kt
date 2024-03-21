@@ -49,22 +49,26 @@ class HomeDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeDetailBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this).get(HomeDetailViewModel::class.java)
-        followersViewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
-        followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
-
-        binding.progressBar.visibility = View.VISIBLE
-
-        val username = intent.getStringExtra(EXTRA_USERNAME)
 
         binding.BackButton.setOnClickListener{
             //Create an Intent to Start HomeFragment
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
+        }
+
+        viewModel = ViewModelProvider(this).get(HomeDetailViewModel::class.java)
+        followersViewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
+        followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
+
+        showLoading(true)
+
+        val username = intent.getStringExtra(EXTRA_USERNAME)
+
+
+        lifecycleScope.launch {
+            fetchData(username)
         }
 
         // Initialize ViewPager
@@ -78,10 +82,6 @@ class HomeDetailActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tabsLayout, viewPager) { tab, position ->
             tab.text = getString(TAB_TITLES[position])
         }.attach()
-
-        lifecycleScope.launch {
-            fetchData(username)
-        }
 
         observeUserData()
     }
@@ -108,7 +108,9 @@ class HomeDetailActivity : AppCompatActivity() {
                 Glide.with(this@HomeDetailActivity).load(user.avatarURL).transform(CircleCrop())
                     .into(profileImage)
             }
-            binding.progressBar.visibility = View.GONE
+            showLoading(false)
+
+
         })
 
         followersViewModel.userFollowers.observe(this, Observer { followers ->
