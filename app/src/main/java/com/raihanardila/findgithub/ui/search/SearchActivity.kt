@@ -108,10 +108,27 @@ class SearchActivity : AppCompatActivity(), UserAdapter.OnUserClickListener,
     }
 
     override fun onLoveButtonClick(position: Int) {
-        val buttonLove = binding.rvUser.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
-            R.id.buttonLove)
-        buttonLove?.setImageResource(R.drawable.ic_fv_clarity_solid)
-        userAdapter.notifyItemChanged(position)
-        Toast.makeText(this, "Button love clicked at position $position", Toast.LENGTH_SHORT).show()
+        val user = userAdapter.getItem(position)
+        val isFavorite = user?.isFavorite ?: return
+        val username = user.login
+
+        if (isFavorite) {
+            viewModel.deleteFavoriteUser(user)
+            Toast.makeText(this, "$username Removed from favorites", Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.insertFavoriteUser(user)
+            Toast.makeText(this, "$username Added to favorites", Toast.LENGTH_SHORT).show()
+        }
+
+        user.isFavorite = !isFavorite // Toggle status favorite
+
+        // Update tampilan tombol love berdasarkan status favorit yang baru
+        val buttonLove = binding.rvUser.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(R.id.buttonLove)
+        if (buttonLove != null) {
+            buttonLove.setImageResource(
+                if (user.isFavorite) R.drawable.ic_fv_clarity_solid
+                else R.drawable.ic_fv_clarity
+            )
+        }
     }
 }
