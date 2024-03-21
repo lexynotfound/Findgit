@@ -20,7 +20,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
-        buildConfigField("String", "API_TOKEN", "\"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\"")
+        buildConfigField("String", "API_TOKEN", "\"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\"")
     }
 
     buildTypes {
@@ -56,14 +56,21 @@ dependencies {
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation (libs.material)
     implementation (libs.circleimageview)
+    implementation (libs.androidx.core.splashscreen)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.navigation.fragment.ktx)
+    implementation (libs.androidx.room.runtime)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.datastore.core)
     annotationProcessor (libs.compiler)
+    implementation(libs.androidx.preference.ktx)
     implementation (libs.annotations)
     implementation (libs.shimmer)
     implementation (libs.retrofit)
+    implementation(libs.androidx.datastore.preferences)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     implementation (libs.converter.gson)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)

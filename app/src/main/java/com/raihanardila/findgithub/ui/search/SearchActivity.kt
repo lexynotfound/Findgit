@@ -3,6 +3,8 @@ package com.raihanardila.findgithub.ui.search
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -11,15 +13,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.UsersModel
 import com.raihanardila.findgithub.databinding.ActivitySearchBinding
 import com.raihanardila.findgithub.ui.adapter.UserAdapter
 import com.raihanardila.findgithub.ui.base.HomeDetailActivity
 import com.raihanardila.findgithub.ui.base.HomeDetailFragment
+import com.raihanardila.findgithub.ui.interfaces.OnLoveButtonClickListener
 import com.raihanardila.findgithub.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.*
 
-class SearchActivity : AppCompatActivity(), UserAdapter.OnUserClickListener {
+class SearchActivity : AppCompatActivity(), UserAdapter.OnUserClickListener,
+    OnLoveButtonClickListener {
 
     private lateinit var binding: ActivitySearchBinding
     private lateinit var viewModel: HomeViewModel
@@ -41,7 +46,7 @@ class SearchActivity : AppCompatActivity(), UserAdapter.OnUserClickListener {
         }
 
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        userAdapter = UserAdapter()
+        userAdapter = UserAdapter(this)
 
         userAdapter.setOnUserClickListener(this)
 
@@ -100,5 +105,13 @@ class SearchActivity : AppCompatActivity(), UserAdapter.OnUserClickListener {
             putExtra(HomeDetailFragment.EXTRA_USERNAME, data.login)
         }
         startActivity(intent)
+    }
+
+    override fun onLoveButtonClick(position: Int) {
+        val buttonLove = binding.rvUser.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
+            R.id.buttonLove)
+        buttonLove?.setImageResource(R.drawable.ic_fv_clarity_solid)
+        userAdapter.notifyItemChanged(position)
+        Toast.makeText(this, "Button love clicked at position $position", Toast.LENGTH_SHORT).show()
     }
 }

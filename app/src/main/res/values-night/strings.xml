@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="share">Share</string>
+    <string name="back">Icon Back</string>
+    <string name="share_profile">Bagikan Profil</string>
+    <string name="share_profile_subject">Profil GitHub</string>
+
+</resources>

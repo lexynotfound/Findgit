@@ -10,11 +10,31 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/iconToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:menu="@menu/profile_menu" />
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <!-- Add your icon or other views here -->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:contentDescription="@string/settings"
+                android:padding="8dp"
+                android:src="@drawable/ic_settings" />
+
+            <ImageView
+                android:id="@+id/imageShareView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:contentDescription="@string/share"
+                android:padding="8dp"
+                android:src="@drawable/icons8_share" />
+        </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
@@ -189,28 +209,22 @@
                     app:layout_constraintStart_toEndOf="@id/smallImage2"
                     app:layout_constraintTop_toBottomOf="@id/followingIcon"
                     tools:src="@tools:sample/avatars" />
-
-                <!-- Tabs Layout -->
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabsLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/smallImage1"
-                    app:tabGravity="fill"
-                    app:tabMode="fixed" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
     </com.google.android.material.appbar.AppBarLayout>
     <!-- Content ViewPager -->
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

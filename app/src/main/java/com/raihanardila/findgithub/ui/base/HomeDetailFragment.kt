@@ -1,6 +1,7 @@
 // HomeDetailFragment.kt
 package com.raihanardila.findgithub.ui.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
@@ -97,6 +98,11 @@ class HomeDetailFragment : Fragment() {
                 nameTextView.text = user.name
                 followersCount.text = user.followers
                 followingCount.text = user.following
+
+                binding.ShareButton.setOnClickListener{
+                    shareProfile(user.login)
+                }
+
                 Glide.with(this@HomeDetailFragment).load(user.avatarURL).transform(CircleCrop())
                     .into(profileImage)
             }
@@ -119,6 +125,17 @@ class HomeDetailFragment : Fragment() {
 
         viewModel.readme.observe(viewLifecycleOwner, Observer { readme ->
             val decodedContent = decodeBase64(readme.content)
+            val formattedContent = decodedContent
+                .split("\n")
+                .joinToString("\n") { line ->
+                    if (line.isNotBlank()) {
+                        "• $line"
+                    } else {
+                        ""
+                    }
+                }
+            // Update tampilan dengan konten README yang sudah diformat
+            binding.bioTextView.text = formattedContent
             displayReadmeContent(decodedContent)
         })
 
@@ -144,6 +161,20 @@ class HomeDetailFragment : Fragment() {
             // Add the ImageView to the image container
             binding.imageContainer.addView(imageView)
         }
+    }
+
+    private fun shareProfile(username: String) {
+        // Create URL with username
+        val url = "https://www.github.com/$username"
+
+        // Create intent to share link
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_profile_subject))
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url)
+
+        // Start activity to share
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_profile)))
     }
 
 
