@@ -17,7 +17,6 @@ import com.raihanardila.findgithub.ui.base.HomeDetailActivity
 class FavoriteFragment : Fragment(), FavoriteUserAdapter.OnFavoriteUserClickListener {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var adapter: FavoriteUserAdapter
-    private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -46,7 +45,7 @@ class FavoriteFragment : Fragment(), FavoriteUserAdapter.OnFavoriteUserClickList
 
         // Amati LiveData dari ViewModel untuk memperbarui tampilan
         favoriteViewModel.getAllFavorite().observe(viewLifecycleOwner) { favorite ->
-            adapter.setListNotes(favorite)
+            adapter.submitList(favorite)
         }
     }
 

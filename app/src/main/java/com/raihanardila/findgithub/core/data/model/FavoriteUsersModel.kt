@@ -8,5 +8,5 @@ data class FavoriteUsersModel(
     @PrimaryKey(autoGenerate = false)
     var username: String = "",
     var avatarUrl: String? = null,
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
 )

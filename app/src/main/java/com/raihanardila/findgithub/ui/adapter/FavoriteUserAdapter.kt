@@ -1,20 +1,22 @@
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.raihanardila.findgithub.R
 import com.raihanardila.findgithub.core.data.model.FavoriteUsersModel
 import com.raihanardila.findgithub.databinding.ItemUsersBinding
+import com.raihanardila.findgithub.util.FavoriteUserDiffCallback
 
 class FavoriteUserAdapter(private val onFavoriteDeleteClickListener: OnFavoriteDeleteClickListener, private val listener: OnFavoriteUserClickListener) : RecyclerView.Adapter<FavoriteUserAdapter.FavViewHolder>() {
     private val listFavorite = ArrayList<FavoriteUsersModel>()
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setListNotes(listFavorite: List<FavoriteUsersModel>) {
-        this.listFavorite.clear()
-        this.listFavorite.addAll(listFavorite)
-        notifyDataSetChanged()
+    fun submitList(newList: List<FavoriteUsersModel>){
+        val diffResult = DiffUtil.calculateDiff(FavoriteUserDiffCallback(listFavorite.toList(), newList))
+        listFavorite.clear()
+        listFavorite.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun getFavoriteUserAt(position: Int): FavoriteUsersModel {
